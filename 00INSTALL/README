@@ -1,0 +1,14 @@
+README
+Created Thu Jan 24 09:29:45 AKST 2013
+Copyright (C) 2013 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+Filelist
+========
+comskip.ini
+  Comskip configuration file.
+  Specified on command line using --ini=<file>
+  Extracted from comskip81_052.zip
+
+INSTALL
+  Installation of comskip under wine (Wine Is Not an Emulator) on debian.

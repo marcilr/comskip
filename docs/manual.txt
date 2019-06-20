@@ -1,0 +1,298 @@
+manual.txt
+Created Thu Jan 24 08:47:40 AKST 2013
+Copyright (C) 2013 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+A short guide to Comskip
+by Erik.
+
+Contents:
+  A short guide to Comskip
+  Contents:
+  Introduction
+  Installation
+  Running Comskip automatically by GBPVR
+  Manual running of Comskip
+  Input files
+  Running Comskip the Windows way
+  Configuring Comskip
+  Frame number
+  Graph on video information
+  Navigation
+  Commercial reviewing mode
+  Terminating
+
+
+Introduction
+============
+Before using Comskip it is essential to understand the basic operation of Comskip.  Comskip reads
+and decodes a recorded mpeg file based on instructions Comskip reads from a so called ini file. 
+The recording is analyzed on various characteristics such as black frames, silences and changes in
+aspect ratio.
+
+Based on this information Comskip segments the recording in blocks and using heuristics, together
+with additional information such as the presence of logo, the scene change rate, Close Captioning
+information and other information sources Comskip tries to determine what blocks of the recording
+are to be characterized as commercials.
+
+After the analysis is done Comskip writes out the information on the detected commercials in
+various possible formats.
+
+
+Installation
+============
+This guide describes how to use Comskip in combination with GBPVR.  GBPVR is an excellent free PVR
+software for Windows.  Other PVR software's may also be able to make use of Comskip.
+
+Copy all files from the distribution zip file that start with Comskip into the GBPVR home
+directory.  This is normally c:\Program Files\devnz\gbpvr\
+
+
+Running Comskip automatically by GBPVR
+======================================
+There are multiple ways to let GBPVR activate Comskip.  The simplest approach is to enable Comskip
+in the configuration tab of GBPVR.  This will start Comskip as soon as a recording ends.  Only one
+Comskip will be active at any time so when one recording ends while Comskip is still busy GBPVR
+will delay the start of Comskip on the new recording till the previous of Comskip is finished.
+Another approach is required when more then only Comskip has to run after the recoding is finished.
+One option is the use a postprocessing.bat file.  GBPVR will run the postprocessing.bat file found
+in the GBPVR home directory after a recording is finished with two parameters.  The first
+parameter is the fully qualified filename of the just finished recording.  The second parameter is
+the channel number from which the recording was done.
+
+The postprocessing.bat file that is included inside the Comskip distribution file gives examples
+of how this information can be used. A third way to run Comskip is from the parallelprocessing.bat
+file. This parallelprocessing.bat is activated directly after a recording has been started and it
+uses the same parameters as the postprocessing.bat file.
+
+When run on an ongoing recording Comskip will detect when it has reached the end of the file and
+wait some time to see if the file has been growing.  If so it will continue reading until it again
+reaches the end of the file.  If the file no longer grows Comskip assumes the recording is
+finished and will start the finalization of the commercial detection.
+
+The two batch files will only be used by GBPVR when the running of Comskip in the GBPVR
+configuration Tab is disabled.
+
+
+Manual running of Comskip
+=========================
+Comskip is a console window program. This means it does not have a nice windows user interface.
+This can be confusing for many users.  The biggest problem is that error messages are possibly
+only shown in the console window and when Windows automatically closes this window when the
+Comskip execution is finished one can not read the error messages anymore.
+
+The best approach to see all the possible output from Comskip is to start a console window and
+then to activate Comskip inside that console window.  This prevents Windows from closing the
+windows automatically and will allow the reading of all messages.
+
+To start a console window click on "Start", then on "Run..." enter "cmd" without the quotes and
+click OK.  A black window with a command prompt will appear.  If you have never used a console
+window you may enter "help" without the quotes and then the ENTER key.  This will show what
+command you can give.  Use the cd command to go the GBPVR home directory and activate Comskip by
+entering the word Comskip together with the name of the file you want Comskip to run on enclosed
+in double quotes.  An example:
+
+  comskip "c:\My Videos\my film.mpg"
+
+Entering only the word Comskip will show the possible use of the Comskip program and its
+parameters.  Parameters between [] are optional and [a|b] denotes either a or b can be used as an
+optional parameter.  The parameter <file> should be a filename.  Filenames with spaces should be
+surrounded by double quotes.
+
+Usage:
+  comskip [-h|--help] [-w|--debugwindow] [-n|--playnice] [--zpcut] [--zpchapter] [--videoredo] \
+    [--csvout] [-p|--pid=<int>] [-t|--ts] [-d|--detectmethod=<int>] [-v|--verbose=<int>] \
+    [--ini=<file>] [--logo=<file>] <file>
+
+  -h, --help                 Display syntax
+  -w, --debugwindow          Show debug window
+  -n, --playnice             Slows detection down
+  --zpcut                    Outputs a ZoomPlayer cutlist
+  --zpchapter                Outputs a ZoomPlayer chapter file 
+  --videoredo                Outputs a VideoRedo cutlist
+  --csvout                   Outputs a csv of the frame array
+  -p, --pid=<int>            The PID of the video in the TS
+  -t, --ts                   The input file is a Transport Stream
+  -d, --detectmethod=<int>   An integer sum of the detection methods to use
+  -v, --verbose=<int>        Verbose level
+  -m, --demux                Demux the input file into Elementary Streams
+  --ini=<file>               Ini file to use
+  --logo=<file>              Logo file to use
+  <file>                     Input file
+
+Detection methods available:
+         1 - Frame
+         2 - Logo
+         3 - Scene Change
+         4 - Fuzzy Logic
+        16 - Closed Captions
+        32 - Aspect Ratio
+        64 - Silence
+       255 - USE ALL AVAILABLE
+
+
+Input files 
+===========
+Comskip can operate on 3 types of files.  The first file type is an MPEG file.  The extension must
+be mpg, mpeg (for mpeg Program Streams), ts (for mpeg Transport Streams) or dvr-ms for DVR-MS).
+Maximum resolution is 2000 by 1200 and the content must be MPEG2 video and MPEG2 or AC3 audio as
+recorded by most mpeg encoders.  When an mpeg file is provided as input Comskip will do a full
+decoding and commercial detection.  When the demux switch is used Comskip will demux the mpeg
+input file into a separate audio and video elemtary stream suitable for many editor tools.  A
+second input file type is a csv file.  This file can be created by a previous run of Comskip by
+setting output_framearry=1 or using the -csvout parameter.  This type of input file is useful when
+Comskip must be run multiple times to tune certain parameters.  This skips the mpeg decoding and
+results in a substantial faster execution.  The third type of input file is a .txt file with the
+commercial cutpoints as generated by a previous run of Comskip.  When this type of input file is
+used Comskip will open the debugwindow and it is possible to review quickly the detected
+commercials and modify the cutpoints if required and write a new .txt file.
+
+
+Running Comskip the Windows way
+===============================
+When Comskip is configured correctly it is convenient to run Comskip by dragging and dropping an
+input file on the Comskip executable.  Its is also possible to create a desktop shortcut to
+Comskip.exe, possibly with added parameters and then drag and drop the input file on the desktop
+shortcut.  A third way is right clicking on the input file, selecting "Open width..." then to
+chose the Comskip executable.  After some use Comskip will appear as one of the quick 
+"Open width" options.
+
+
+Configuring Comskip
+===================
+Comskip has many configurable parameters.  They are read from the default Comskip.ini file as
+found in the same directory as Comskip.exe of from the file specified in the optional
+"-ini=<filename>" parameter.  This makes it possible to have configuration files optimized for
+certain conditions.  An example of this kind of usage can be found in the Postprocessing.bat
+inside the distribution zip file.  The tuning of the parameters is described in the tuning manual.
+
+
+The debug window of Comskip.
+============================
+When ComSkip is started with the -w or --debugwindow switch a graphics window will appear.  Once
+finished Comskip will NOT automatically exit but has to be closed manually by killing the console
+window or by hitting ESCAPE.  Do not use the debug window when Comskip is called automatically
+from GBPVR or other PVR software.
+
+The debugwindow window will show the decoded mpeg in black and white.
+
+Next to this it will show some information to debug the settings of Comskip.
+
+Another use of the debugwindow is when Comskip is used to review the output of a previous run of
+Comskip.  This is done by starting Comskip with the name of the previously generated .txt file as
+its single parameter.  The detailed analysis information is not available in this mode but it
+provides some additional keys for modifying the commercial locations and writing out the resulting
+information.
+
+
+Frame number
+============
+At the top the frame four numbers are shown.  The first number is the frame number of the current
+frame.  The second number is the brightness.  A letter 'B' after the brightness indicates the
+current frame is Black.  The third number is the volume. A letter 'S' after the volume indicates
+the current frame is regarded as Silent.  The fourth number is the uniformity of the frame.  A
+letter 'U' after the uniformity indicates the frame is regarded as uniform.
+
+
+Aspect Ratio information
+========================
+Two blue lines are drawn at the border between the black bars at the bottom and the top and the
+active video.  This will allow to check if the detection settings for max_brightness,
+test_brightness and max_avg_brightness are correct because these are use to detect the black parts
+of the screen.
+
+The blue lines will always stay minimally the border size from the top and bottom of the video
+size.
+
+
+Logo information
+================
+A rectangle will be draw around the logo position as soon as it is found.  As soon as the
+detection level is above the logo_threshold the logo detection mask will overlay the logo to
+indicate the tested pixels. If no logo is detected the frame is red.
+
+
+Timeline information
+====================
+At the top a timeline is shown indicating information detected for each frame. 
+
+The bottom 5 pixels of the timeline signal the detection of silence. Any sound volume level below 
+max_volume will be show as green upon white background. Speech without music should give a lot of
+silence.
+
+The next 5 pixels on the timeline signal the detection of black frames.  A red line on a white
+background signals a black frame or any other frame that is signaling an equally relevant scene
+change.
+
+When silence is detected on a black frame both above bars will be drawn in black.  These lines are
+the principle cut points for Comskip
+
+The next 5 pixels of the timeline signal the presence of logo. The presence of logo is signaled by
+black, the absence by white.  When logo is disabled, the logo presence is signaled by gray bars
+instead of black.
+
+The next 10 pixels of the timeline signal the aspect ratio.  A blue line on a white background
+depicts the detected aspect ratio where the height of the line above the logo bar is proportional
+to the detected aspect ratio.  When the detection is finished or when live_tv=1 this bar is also
+used to show the position of commercials.  A gray bar signals commercial and a white bar signals
+show.
+
+When cut_on_ar_change=1 in the ini file (default) changes in the aspect ratio will create
+additional cut points when sufficient logo is found.
+
+The next 5 pixels are used to show the position of the commercials as indicated in an optional
+reference file as soon as detection is finished.  Black depicts where commercial are expected,
+white depicts where show is expected.
+
+
+Graph on video information
+==========================
+The colored graphs enabled/disabled by pressing the 'g' key show detailed information about the
+recording.
+
+From the bottom to the top it shows brightness, sound, non_uniformity, scene change, logo match,
+aspect ratio and black bar positions.
+
+Through zooming ('z') and unzooming ('u') of the timeline you can have both a good overview and
+see on a per frame basis the transitions.  The parts of the graphs that reach a value below the
+Blackframe limits (max_avg_brightness, max_volume, non_uniformity) get a white color.
+
+The bottom four graphs have an additional white/red line showing the block average value that is
+red when above the "total average times punish_threshold" and that is white otherwise.
+
+
+Navigation
+==========
+When decoding of the mpeg is finished or when the .csv file is loaded it is possible to navigate
+through the mpeg file.  Navigation can be done with the cursor keys and with page up/down.  Look
+at the frame number to see the step taken for each of the keys.  A red vertical line in the
+timeline shows the current position.  Left clicking with the mouse in the timeline repositions the
+current frame to the click position.  This can be used to quickly review the correctness of the
+commercial detection.
+
+Pressing 'n' skips to just before the next black frame, pressing 'p' skips to just after the
+previous next black frame.  Pressing 'e' skips to just before the end of the next block, pressing
+'b' skips to just after the beginning of the previous block
+
+Video and frame position is not always 100% aligned, the actual error depends on the mpeg file
+being used.
+
+
+Commercial reviewing mode
+=========================
+When started with the .txt file as its single parameter the frame number is shown and in the
+timeline black bars show the location of the detected commercials.
+
+The navigation is identical except the letter keys.
+The 'n' key jumps to the next end of a detected commercial.
+The 'p' key jumps to the previous beginning of a commercial.
+The 'b' key sets the beginning of the commercial that ends after the current frame position
+The 'e' key sets the end of the commercial that begins before the current frame position.
+The 'i' key inserts a short commercial at the current location
+The 'd' key deletes the commercial around the current frame position
+The 'w' key writes the current commercial list to the .txt file and all other selected output
+        formats
+
+Terminating
+===========
+To stop the session, close the console window or hit the ESCAPE key

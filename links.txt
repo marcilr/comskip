@@ -1,0 +1,24 @@
+links.txt
+Created Thu Jan 24 07:43:19 AKST 2013
+Copyright (C) 2013 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+Comskip related links
+
+
+Links
+=====
+A short guide to Comskip
+by Erik.
+Has command line syntax.
+http://www.kaashoek.com/files/manual.htm
+
+Automatically Detect and Delete Commercials with Comskip
+Very nice bash script here to drive Comskip under wine.
+http://forums.debian.net/viewtopic.php?f=16&t=34243
+
+Comskip
+http://www.kaashoek.com/comskip/
+
+Comskip downloads
+http://www.kaashoek.com/files/

@@ -1,0 +1,36 @@
+README
+Created Wed Jun 19 20:10:32 AKDT 2019
+Copyright (C) 2019 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+Filelist
+========
+00INSTALL/
+  Installation of comskip under wine (Wine Is Not an Emulator)
+  on debian.
+
+00TARBALLS/
+  Tarballs
+
+comskip.txt
+  Comskip is a free mpeg commercial detector.  It is a windows console
+  application that reads a mpeg file and analyses the content based on a large
+  amount of configurable parameters.  After analysis it generates a file in
+  various possible formats containing the location of the commercials inside
+  the mpeg file.  The formats include input files for Personal Video
+  applications like SageTV or GBPVR, interactive video editors (VideoRedo,
+  Cuttermaran,Mpeg2Schnitt...) command line video cutters (mpgtx, cuttermaran,
+  mencoder) and video players (zoomplayer, mplayer, ...).  Comskip can read MPEG
+  and h.264 video and MPEG2, AC3 and AAC audio from PS, TS and dvr-ms files upto
+  HD resolution (max 2000x1200) at 25fps (PAL) and 29.97fps (NTSC).  The h.264
+  and WTV version is still in beta test and available for donators.  Comskip can
+  NOT read copy protected recordings. 
+  --Comskip
+    http://www.kaashoek.com/comskip/
+
+docs/
+  Documentation
+
+links.txt
+  Comskip related links
+

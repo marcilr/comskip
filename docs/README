@@ -1,0 +1,24 @@
+README
+Created Thu Jan 24 08:18:27 AKST 2013
+Copyright (C) 2013 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+Filelist
+========
+manual.html
+  A short guide to Comskip by Erik.
+  Comskip manual extracted from comskip81_052.zip
+  Has command line syntax.
+  http://www.kaashoek.com/files/comskip81_052.zip
+
+manual.pdf
+  A short guide to Comskip by Erik.
+  Comskip manual created by printing manual.html
+  to pdf in Epiphany 2.30.6
+  http://www.kaashoek.com/files/comskip81_052.zip
+
+manual.txt
+  A short guide to Comskip by Erik.
+  Comskip manual created by copy-n-paste of manual.html
+  in Epiphany 2.30.6
+  http://www.kaashoek.com/files/comskip81_052.zip

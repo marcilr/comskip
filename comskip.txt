@@ -1,0 +1,71 @@
+comskip.txt
+Created Wed Jan 23 21:18:51 AKST 2013
+Copyright (C) 2013 by Raymond E. Marcil <marcilr@gmail.com>
+
+
+Comskip is a free mpeg commercial detector.  It is a windows console
+application that reads a mpeg file and analyses the content based on a large
+amount of configurable parameters.  After analysis it generates a file in
+various possible formats containing the location of the commercials inside
+the mpeg file.  The formats include input files for Personal Video
+applications like SageTV or GBPVR, interactive video editors (VideoRedo,
+Cuttermaran,Mpeg2Schnitt...) command line video cutters (mpgtx, cuttermaran,
+mencoder) and video players (zoomplayer, mplayer, ...).  Comskip can read MPEG
+and h.264 video and MPEG2, AC3 and AAC audio from PS, TS and dvr-ms files upto
+HD resolution (max 2000x1200) at 25fps (PAL) and 29.97fps (NTSC).  The h.264
+and WTV version is still in beta test and available for donators. Comskip can
+NOT read copy protected recordings.  
+
+kaashoek.com/comskip/
+
+
+Usage:
+  comskip [-h|--help] [-w|--debugwindow] [-n|--playnice] [--zpcut] [--zpchapter] [--videoredo] \
+    [--csvout] [-p|--pid=<int>] [-t|--ts] [-d|--detectmethod=<int>] [-v|--verbose=<int>] \
+    [--ini=<file>] [--logo=<file>] <file>
+
+  -h, --help                 Display syntax
+  -w, --debugwindow          Show debug window
+  -n, --playnice             Slows detection down
+  --zpcut                    Outputs a ZoomPlayer cutlist
+  --zpchapter                Outputs a ZoomPlayer chapter file 
+  --videoredo                Outputs a VideoRedo cutlist
+  --csvout                   Outputs a csv of the frame array
+  -p, --pid=<int>            The PID of the video in the TS
+  -t, --ts                   The input file is a Transport Stream
+  -d, --detectmethod=<int>   An integer sum of the detection methods to use
+  -v, --verbose=<int>        Verbose level
+  -m, --demux                Demux the input file into Elementary Streams
+  --ini=<file>               Ini file to use
+  --logo=<file>              Logo file to use
+  <file>                     Input file
+
+Detection methods available:
+         1 - Frame
+         2 - Logo
+         3 - Scene Change
+         4 - Fuzzy Logic
+        16 - Closed Captions
+        32 - Aspect Ratio
+        64 - Silence
+       255 - USE ALL AVAILABLE
+
+docs/manual.txt:102
+
+
+Example:
+  comskip "c:\My Videos\my film.mpg"
+
+Entering only the word Comskip will show the possible use of the Comskip
+program and its parameters.  Parameters between [] are optional and [a|b]
+denotes either a or b can be used as an optional parameter.  The parameter
+<file> should be a filename.  Filenames with spaces should be surrounded by
+double quotes.
+
+docs/manual.txt:94
+
+
+Links
+=====
+Comskip
+http://www.kaashoek.com/comskip/
